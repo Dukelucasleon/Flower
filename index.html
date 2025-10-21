@@ -2,38 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Random Flower Generator</title>
+  <title>Flower Generator</title>
   <style>
     body {
-      text-align: center;
-      font-family: sans-serif;
+      margin: 0;
       background-color: #f0f8ff;
     }
     #canvas {
       position: relative;
-      width: 500px;
-      height: 500px;
-      margin: 20px auto;
-      border: 2px solid #ccc;
-      background-color: #fff;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
     }
     #canvas img {
       position: absolute;
-      width: 100%;
-      height: 100%;
       object-fit: contain;
+      max-width: 100%;
+      max-height: 100%;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 10px;
-      cursor: pointer;
+
+    #Flower {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+    }
+
+    #Stem {
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+    }
+
+    #Animal {
+      top: 50%;
+      left: 10%;
+      transform: translateY(-50%);
+      width: 150px;
+    }
+
+    #Sky {
+      top: 0;
+      right: 0;
+      width: 200px;
+    }
+
+    #Ground {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
     }
   </style>
 </head>
 <body>
-  <h1>🌸 Random Flower Generator</h1>
-  <button onclick="generateFlower()">Generate Flower</button>
   <div id="canvas">
     <img id="Sky" />
     <img id="Ground" />
@@ -43,7 +66,6 @@
   </div>
 
   <script>
-    // Folder names must match your GitHub repo structure
     const folders = {
       Sky: 'Sky',
       Ground: 'Ground',
@@ -52,7 +74,6 @@
       Flower: 'Flower'
     };
 
-    // Number of images in each folder (adjust as needed)
     const counts = {
       Sky: 3,
       Ground: 3,
@@ -61,17 +82,14 @@
       Flower: 3
     };
 
-    // Returns a random integer between 1 and max (inclusive)
     function getRandomIndex(max) {
       return Math.floor(Math.random() * max) + 1;
     }
 
-    // Returns a random hue-rotation filter
     function getRandomHueRotation() {
       return `hue-rotate(${Math.floor(Math.random() * 360)}deg)`;
     }
 
-    // Main function to generate the flower
     function generateFlower() {
       for (const part in folders) {
         const img = document.getElementById(part);
@@ -81,7 +99,6 @@
       }
     }
 
-    // Optional: generate one on page load
     window.onload = generateFlower;
   </script>
 </body>
