@@ -4,61 +4,65 @@
   <meta charset="UTF-8" />
   <title>Flower Generator</title>
   <style>
-    body {
-      margin: 0;
-      background-color: #f0f8ff;
-    }
-    #canvas {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-    #canvas img {
-      position: absolute;
-      object-fit: contain;
-      pointer-events: none;
-    }
+  body {
+    margin: 0;
+    background-color: #f0f8ff;
+  }
 
-    #Flower {
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 195px; /* 130 * 1.5 */
-  height: 195px; /* 130 * 1.5 */
-}
+  #canvas {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-#Stem {
-  top: 60%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 45px;
-  height: 400px; /* Significantly taller stem */
-}
+  #canvas img {
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+  }
 
-    #Animal {
-      top: 50%;
-      left: 5%;
-      transform: translateY(-50%);
-      width: 100px;
-      height: 100px;
-    }
+  #Flower {
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 195px;
+    height: 195px;
+  }
 
-    #Sky {
-      top: 5%;
-      right: 5%;
-      width: 130px;
-      height: 130px;
-    }
+  #Stem {
+    top: 55%; /* Slightly moved up to align with bottom of flower */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 45px;
+    height: 400px;
+    object-fit: fill; /* This stretches the image to fill the full height */
+  }
 
-    #Ground {
-      bottom: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 180px;
-      height: 90px;
-    }
-  </style>
+  #Animal {
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 100px;
+  }
+
+  #Sky {
+    top: 5%;
+    right: 5%;
+    width: 130px;
+    height: 130px;
+  }
+
+  #Ground {
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 90px;
+  }
+</style>
+
 </head>
 <body>
   <div id="canvas">
@@ -107,6 +111,7 @@
   </script>
 </body>
 </html>
+
 
 
 
