@@ -98,7 +98,7 @@
       for (const part in folders) {
         const img = document.getElementById(part);
         const index = getRandomIndex(counts[part]);
-        img.src = `${folders[part]}/${index}.png`;
+        img.src = `${part}1/${index}.png`;
         img.style.filter = getRandomHueRotation();
       }
     }
@@ -107,4 +107,3 @@
   </script>
 </body>
 </html>
-
