@@ -31,13 +31,14 @@
   }
 
   #Stem {
-    top: 55%; /* Slightly moved up to align with bottom of flower */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 45px;
-    height: 400px;
-    object-fit: fill; /* This stretches the image to fill the full height */
-  }
+  top: 42%; /* Move stem higher to start under the flower */
+  left: 50%;
+  transform: translateX(-50%) scaleY(3); /* Scale stem vertically */
+  transform-origin: top; /* Stretch down from the top */
+  width: 45px;
+  height: 160px; /* Keep original height so scaleY works from it */
+  object-fit: contain; /* Or 'fill' if you prefer forced stretch */
+}
 
   #Animal {
     top: 50%;
@@ -111,6 +112,7 @@
   </script>
 </body>
 </html>
+
 
 
 
