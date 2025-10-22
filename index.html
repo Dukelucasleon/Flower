@@ -31,13 +31,13 @@
   }
 
   #Stem {
-  top: 42%; /* Move stem higher to start under the flower */
+  top: 42%; /* Aligns the top of the stem under the flower */
   left: 50%;
-  transform: translateX(-50%) scaleY(3); /* Scale stem vertically */
-  transform-origin: top; /* Stretch down from the top */
-  width: 45px;
-  height: 160px; /* Keep original height so scaleY works from it */
-  object-fit: contain; /* Or 'fill' if you prefer forced stretch */
+  transform: translateX(-50%) scaleY(3); /* Vertically scales 3x */
+  transform-origin: top; /* Anchor scaling from top */
+  width: 75px; /* Increased from 45px → 75px */
+  height: 160px; /* Original image height */
+  object-fit: contain; /* Keeps image aspect ratio */
 }
 
   #Animal {
@@ -112,6 +112,7 @@
   </script>
 </body>
 </html>
+
 
 
 
