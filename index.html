@@ -4,74 +4,82 @@
   <meta charset="UTF-8" />
   <title>Flower Generator</title>
   <style>
-  body {
-    margin: 0;
-    background-color: #f0f8ff;
-  }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #f0f8ff;
+      overflow: hidden;
+    }
 
-  #canvas {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
+    #canvas-wrapper {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-  #canvas img {
-    position: absolute;
-    object-fit: contain;
-    pointer-events: none;
-  }
+    #canvas {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      transform: scale(calc(100vw / 1920));
+      transform-origin: top left;
+    }
 
-  #Flower {
-    top: 45%;
-    left: 50%;
-    transform: translate(-40%, -90%);
-    width: 195px;
-    height: 195px;
-  }
+    #canvas img {
+      position: absolute;
+      object-fit: contain;
+      pointer-events: none;
+    }
 
-  #Stem {
-  top: 42%; /* Aligns the top of the stem under the flower */
-  left: 50%;
-  transform: translate(-40%, -5%) scaleY(3); /* Vertically scales 3x */
-  transform-origin: top; /* Anchor scaling from top */
-  width: 125px; /* Increased from 45px → 75px */
-  height: 125px; /* Original image height */
-  /*object-fit: contain; /* Keeps image aspect ratio */
-}
+    #Flower {
+      top: 400px;
+      left: 900px;
+      width: 195px;
+      height: 195px;
+    }
 
-  #Animal {
-    top: 50%;
-    left: 5%;
-    transform: translate(835%, -255%);
-    width: 100px;
-    height: 100px;
-  }
+    #Stem {
+      top: 525px;
+      left: 900px;
+      width: 125px;
+      height: 375px; /* 125px × scaleY(3) */
+    }
 
-  #Sky {
-    top: 5%;
-    right: 5%;
-    width: 130px;
-    height: 130px;
-  }
+    #Animal {
+      top: 600px;
+      left: 100px;
+      width: 100px;
+      height: 100px;
+    }
 
-  #Ground {
-  bottom: 0%; /* Pushes it to the very bottom */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 350px; /* Increased from 180px */
-  height: 300px; /* Optional: increase height slightly too */
-}
-</style>
+    #Sky {
+      top: 50px;
+      left: 1740px;
+      width: 130px;
+      height: 130px;
+    }
 
+    #Ground {
+      bottom: 0;
+      left: 785px;
+      width: 350px;
+      height: 300px;
+    }
+  </style>
 </head>
 <body>
-  <div id="canvas">
-    <img id="Sky" />
-    <img id="Ground" />
-    <img id="Stem" />
-    <img id="Flower" />
-    <img id="Animal" />
+  <div id="canvas-wrapper">
+    <div id="canvas">
+      <img id="Sky" />
+      <img id="Ground" />
+      <img id="Stem" />
+      <img id="Flower" />
+      <img id="Animal" />
+    </div>
   </div>
 
   <script>
@@ -103,7 +111,7 @@
       for (const part in folders) {
         const img = document.getElementById(part);
         const index = getRandomIndex(counts[part]);
-        img.src = `${part}1/${index}.png`;
+        img.src = `${folders[part]}/${index}.png`;
         img.style.filter = getRandomHueRotation();
       }
     }
@@ -112,45 +120,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
