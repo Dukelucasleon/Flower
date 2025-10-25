@@ -8,7 +8,6 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background-color: #f0f8ff;
       overflow: hidden;
     }
 
@@ -37,7 +36,7 @@
 
     #Flower {
       top: 120px;
-      left: 880px;          /* UP - dec top, DOWN - inc  top, LEFT - dec left, RIGHT - inc left*/
+      left: 880px;
       width: 280px;
       height: 840px;
     }
@@ -46,7 +45,7 @@
       top: 300px;
       left: 850px;
       width: 315px;
-      height: 945px; /* 125px × scaleY(3) */
+      height: 945px;
     }
 
     #Animal {
@@ -69,6 +68,18 @@
       width: 400px;
       height: 350px;
     }
+
+    #quote {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      max-width: 400px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -79,6 +90,7 @@
       <img id="Stem" />
       <img id="Flower" />
       <img id="Animal" />
+      <div id="quote"></div>
     </div>
   </div>
 
@@ -107,6 +119,11 @@
       return `hue-rotate(${Math.floor(Math.random() * 360)}deg)`;
     }
 
+    function getRandomPastelColor() {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 70%, 90%)`;
+    }
+
     function generateFlower() {
       for (const part in folders) {
         const img = document.getElementById(part);
@@ -116,42 +133,24 @@
       }
     }
 
-    window.onload = generateFlower;
+    function fetchQuote() {
+      fetch('https://raw.githubusercontent.com/your-username/your-repo/main/Words/Words.txt')
+        .then(response => response.text())
+        .then(text => {
+          const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+          const quote = lines[Math.floor(Math.random() * lines.length)];
+          document.getElementById('quote').textContent = `"${quote}"`;
+        })
+        .catch(error => {
+          console.error('Error fetching quote:', error);
+        });
+    }
+
+    window.onload = () => {
+      generateFlower();
+      document.body.style.backgroundColor = getRandomPastelColor();
+      fetchQuote();
+    };
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
