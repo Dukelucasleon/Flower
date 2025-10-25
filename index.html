@@ -183,30 +183,30 @@
       img.classList.add('animated');
       img.style.animation = `${animationName} ${duration}s ease-out`;
 
-      setTimeout(() => {
+      img.addEventListener('animationend', function handleEnd() {
         img.style.animation = '';
         img.classList.remove('animated');
-      }, duration * 1000);
+        img.removeEventListener('animationend', handleEnd);
+      });
     }
 
+    // FIXED: Clean single animation trigger for quotes
     function animateQuote() {
       const quoteEl = document.getElementById('quote');
       const animationName = getRandomAnimation();
       const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
 
-      // Reset animation cleanly
       quoteEl.style.animation = 'none';
       quoteEl.offsetHeight; // Force reflow
-      quoteEl.classList.remove('animated');
 
-      // Apply new animation
-      quoteEl.classList.add('animated');
       quoteEl.style.animation = `${animationName} ${duration}s ease-out`;
+      quoteEl.classList.add('animated');
 
-      setTimeout(() => {
+      quoteEl.addEventListener('animationend', function handleEnd() {
         quoteEl.style.animation = '';
         quoteEl.classList.remove('animated');
-      }, duration * 1000);
+        quoteEl.removeEventListener('animationend', handleEnd);
+      });
     }
 
     function fetchQuote() {
@@ -222,13 +222,13 @@
           const quote = lines[Math.floor(Math.random() * lines.length)];
           const quoteEl = document.getElementById('quote');
           quoteEl.textContent = `"${quote}"\n\nFor my love, Sarah Maria Flores-Castillo`;
-          animateQuote();
+          animateQuote(); // Only animate once after setting text
         })
         .catch(error => {
           console.error('Error fetching quote:', error);
           const quoteEl = document.getElementById('quote');
           quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love, \n\nSarah Maria Flores-Castillo`;
-          animateQuote();
+          animateQuote(); // Only animate once after setting fallback text
         });
     }
 
