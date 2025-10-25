@@ -83,37 +83,19 @@
       text-align: left;
       line-height: 1.4;
       opacity: 0;
-      animation: fadeInSpin 1.2s ease-out 0.5s forwards;
       cursor: pointer;
       white-space: pre-line;
     }
 
-    @keyframes floatIn {
-      0% {
-        opacity: 0;
-        transform: translateY(50px) scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes fadeInSpin {
-      0% {
-        opacity: 0;
-        transform: rotate(-15deg) scale(0.8);
-      }
-      100% {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
-      }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     @keyframes sway {
-      0% { transform: rotate(-1deg); }
-      50% { transform: rotate(1deg); }
-      100% { transform: rotate(-1deg); }
+      0% { transform: rotate(-1.15deg); }
+      50% { transform: rotate(1.15deg); }
+      100% { transform: rotate(-1.15deg); }
     }
 
     .swaying {
@@ -167,21 +149,15 @@
       return `hsl(${hue}, 70%, 90%)`;
     }
 
-    function getRandomAnimation() {
-      const animations = ['floatIn', 'fadeInSpin'];
-      return animations[Math.floor(Math.random() * animations.length)];
-    }
-
     function animatePart(part) {
       const img = document.getElementById(part);
       const index = getRandomIndex(counts[part]);
       img.src = `${folders[part]}/${index}.png`;
       img.style.filter = getRandomHueRotation();
 
-      const animationName = getRandomAnimation();
       const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
       img.classList.add('animated');
-      img.style.animation = `${animationName} ${duration}s ease-out`;
+      img.style.animation = `fadeIn ${duration}s ease-out`;
 
       img.addEventListener('animationend', function handleEnd() {
         img.style.animation = '';
@@ -190,23 +166,11 @@
       });
     }
 
-    // FIXED: Clean single animation trigger for quotes
     function animateQuote() {
       const quoteEl = document.getElementById('quote');
-      const animationName = getRandomAnimation();
-      const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
-
       quoteEl.style.animation = 'none';
       quoteEl.offsetHeight; // Force reflow
-
-      quoteEl.style.animation = `${animationName} ${duration}s ease-out`;
-      quoteEl.classList.add('animated');
-
-      quoteEl.addEventListener('animationend', function handleEnd() {
-        quoteEl.style.animation = '';
-        quoteEl.classList.remove('animated');
-        quoteEl.removeEventListener('animationend', handleEnd);
-      });
+      quoteEl.style.animation = `fadeIn 1.2s ease-out forwards`;
     }
 
     function fetchQuote() {
@@ -221,14 +185,14 @@
           const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
           const quote = lines[Math.floor(Math.random() * lines.length)];
           const quoteEl = document.getElementById('quote');
-          quoteEl.textContent = `"${quote}"\n\nFor my love, Sarah Maria Flores-Castillo`;
-          animateQuote(); // Only animate once after setting text
+          quoteEl.textContent = `"${quote}"\n\nFor my love,\nSarah Maria Flores-Castillo`;
+          animateQuote();
         })
         .catch(error => {
           console.error('Error fetching quote:', error);
           const quoteEl = document.getElementById('quote');
-          quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love, \n\nSarah Maria Flores-Castillo`;
-          animateQuote(); // Only animate once after setting fallback text
+          quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love,\nSarah Maria Flores-Castillo`;
+          animateQuote();
         });
     }
 
@@ -245,7 +209,6 @@
       fetchQuote();
       document.getElementById('quote').addEventListener('click', fetchQuote);
 
-      // Apply gentle breeze effect
       document.getElementById('Flower').classList.add('swaying');
       document.getElementById('Stem').classList.add('swaying');
       document.getElementById('Animal').classList.add('swaying');
