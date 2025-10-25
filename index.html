@@ -110,6 +110,16 @@
       }
     }
 
+    @keyframes sway {
+      0% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
+      100% { transform: rotate(-1deg); }
+    }
+
+    .swaying {
+      animation: sway 6s ease-in-out infinite;
+    }
+
     .animated {
       animation-fill-mode: both;
     }
@@ -180,24 +190,24 @@
     }
 
     function animateQuote() {
-  const quoteEl = document.getElementById('quote');
-  const animationName = getRandomAnimation();
-  const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
+      const quoteEl = document.getElementById('quote');
+      const animationName = getRandomAnimation();
+      const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
 
-  // Reset animation cleanly
-  quoteEl.style.animation = 'none';
-  quoteEl.offsetHeight; // Force reflow
-  quoteEl.classList.remove('animated');
+      // Reset animation cleanly
+      quoteEl.style.animation = 'none';
+      quoteEl.offsetHeight; // Force reflow
+      quoteEl.classList.remove('animated');
 
-  // Apply new animation
-  quoteEl.classList.add('animated');
-  quoteEl.style.animation = `${animationName} ${duration}s ease-out`;
+      // Apply new animation
+      quoteEl.classList.add('animated');
+      quoteEl.style.animation = `${animationName} ${duration}s ease-out`;
 
-  setTimeout(() => {
-    quoteEl.style.animation = '';
-    quoteEl.classList.remove('animated');
-  }, duration * 1000);
-}
+      setTimeout(() => {
+        quoteEl.style.animation = '';
+        quoteEl.classList.remove('animated');
+      }, duration * 1000);
+    }
 
     function fetchQuote() {
       fetch('https://raw.githubusercontent.com/Dukelucasleon/Flower/main/Words/Words.txt')
@@ -234,8 +244,12 @@
       document.body.style.backgroundColor = getRandomPastelColor();
       fetchQuote();
       document.getElementById('quote').addEventListener('click', fetchQuote);
+
+      // Apply gentle breeze effect
+      document.getElementById('Flower').classList.add('swaying');
+      document.getElementById('Stem').classList.add('swaying');
+      document.getElementById('Animal').classList.add('swaying');
     };
   </script>
 </body>
 </html>
-
