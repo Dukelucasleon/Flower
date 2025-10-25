@@ -106,12 +106,13 @@
       animation-fill-mode: both;
     }
 
-    .droplet {
+    .raindrop {
       position: absolute;
       width: 4px;
       height: 4px;
+      background-color: rgba(50, 50, 50, 0.5);
       border-radius: 50%;
-      animation: fall linear infinite;
+      animation: fall linear;
     }
 
     @keyframes fall {
@@ -237,41 +238,17 @@
       }
     }
 
-    function createDroplet(type) {
-      const drop = document.createElement('div');
-      drop.className = 'droplet';
-      drop.style.left = `${Math.random() * 100}vw`;
-      drop.style.top = `-${Math.random() * 20}px`;
-
-      if (type === 'snow') {
-        drop.style.backgroundColor = 'rgba(100, 100, 100, 0.5)';
-        drop.style.animationDuration = `${Math.random() * 3 + 4}s`;
-      } else if (type === 'rain') {
-        drop.style.backgroundColor = 'rgba(30, 30, 30, 0.5)';
-        drop.style.animationDuration = `${Math.random() * 1.5 + 2}s`;
-      }
-
-      drop.style.animationDelay = `${Math.random() * 5}s`;
-      document.body.appendChild(drop);
-
-      setTimeout(() => {
-        drop.remove();
-        createDroplet(type);
-      }, parseFloat(drop.style.animationDuration) * 1000 + 500);
-    }
-
-    function startWeatherLoop(type) {
-      for (let i = 0; i < 80; i++) {
-        createDroplet(type);
-      }
-    }
-
-    function maybeAddWeather() {
-      const roll = Math.floor(Math.random() * 3);
-      if (roll === 0) {
-        startWeatherLoop('snow');
-      } else if (roll === 1) {
-        startWeatherLoop('rain');
+    function maybeAddRain() {
+      if (Math.random() < 0.5) {
+        for (let i = 0; i < 80; i++) {
+          const drop = document.createElement('div');
+          drop.className = 'raindrop';
+          drop.style.left = `${Math.random() * 100}vw`;
+          drop.style.top = `-${Math.random() * 20}px`;
+          drop.style.animationDuration = `${Math.random() * 3 + 2}s`;
+          drop.style.animationDelay = `${Math.random() * 5}s`;
+          document.body.appendChild(drop);
+        }
       }
     }
 
@@ -282,4 +259,13 @@
       fetchQuote(bgColor);
       document.getElementById('quote').addEventListener('click', () => fetchQuote(bgColor));
 
-      document.getElementById('Flower
+      document.getElementById('Flower').classList.add('swaying');
+      document.getElementById('Stem').classList.add('swaying');
+      document.getElementById('Animal').classList.add('swaying');
+
+      maybeAddRain();
+    };
+  </script>
+</body>
+</html>
+
