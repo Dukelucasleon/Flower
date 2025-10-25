@@ -83,7 +83,6 @@
       text-align: left;
       line-height: 1.4;
       opacity: 0;
-      animation: fadeInSpin 1.2s ease-out 0.5s forwards;
       cursor: pointer;
       white-space: pre-line;
     }
@@ -227,7 +226,7 @@
         .catch(error => {
           console.error('Error fetching quote:', error);
           const quoteEl = document.getElementById('quote');
-          quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love, Sarah Maria Flores-Castillo`;
+          quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love, \n\nSarah Maria Flores-Castillo`;
           animateQuote();
         });
     }
@@ -253,3 +252,4 @@
   </script>
 </body>
 </html>
+
