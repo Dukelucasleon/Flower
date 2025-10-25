@@ -81,6 +81,34 @@
       max-width: 500px;
       text-align: left;
       line-height: 1.4;
+      opacity: 0;
+      animation: fadeInSpin 1.2s ease-out 0.5s forwards;
+    }
+
+    @keyframes floatIn {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes fadeInSpin {
+      0% {
+        opacity: 0;
+        transform: rotate(-15deg) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+    }
+
+    .animated {
+      animation-fill-mode: both;
     }
   </style>
 </head>
@@ -126,12 +154,23 @@
       return `hsl(${hue}, 70%, 90%)`;
     }
 
+    function getRandomAnimation() {
+      const animations = ['floatIn', 'fadeInSpin'];
+      return animations[Math.floor(Math.random() * animations.length)];
+    }
+
     function generateFlower() {
       for (const part in folders) {
         const img = document.getElementById(part);
         const index = getRandomIndex(counts[part]);
         img.src = `${folders[part]}/${index}.png`;
         img.style.filter = getRandomHueRotation();
+
+        // Apply animation
+        const animationName = getRandomAnimation();
+        const duration = (Math.random() * 0.5 + 0.8).toFixed(2); // 0.8s to 1.3s
+        img.classList.add('animated');
+        img.style.animation = `${animationName} ${duration}s ease-out`;
       }
     }
 
@@ -162,5 +201,3 @@
   </script>
 </body>
 </html>
-
-
