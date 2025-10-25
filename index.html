@@ -180,17 +180,24 @@
     }
 
     function animateQuote() {
-      const quoteEl = document.getElementById('quote');
-      const animationName = getRandomAnimation();
-      const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
-      quoteEl.classList.add('animated');
-      quoteEl.style.animation = `${animationName} ${duration}s ease-out`;
+  const quoteEl = document.getElementById('quote');
+  const animationName = getRandomAnimation();
+  const duration = (Math.random() * 0.5 + 0.6).toFixed(2);
 
-      setTimeout(() => {
-        quoteEl.style.animation = '';
-        quoteEl.classList.remove('animated');
-      }, duration * 1000);
-    }
+  // Reset animation cleanly
+  quoteEl.style.animation = 'none';
+  quoteEl.offsetHeight; // Force reflow
+  quoteEl.classList.remove('animated');
+
+  // Apply new animation
+  quoteEl.classList.add('animated');
+  quoteEl.style.animation = `${animationName} ${duration}s ease-out`;
+
+  setTimeout(() => {
+    quoteEl.style.animation = '';
+    quoteEl.classList.remove('animated');
+  }, duration * 1000);
+}
 
     function fetchQuote() {
       fetch('https://raw.githubusercontent.com/Dukelucasleon/Flower/main/Words/Words.txt')
@@ -231,3 +238,4 @@
   </script>
 </body>
 </html>
+
