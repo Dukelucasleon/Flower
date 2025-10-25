@@ -110,9 +110,8 @@
       position: absolute;
       width: 4px;
       height: 4px;
-      background-color: rgba(50, 50, 50, 0.5);
       border-radius: 50%;
-      animation: fall linear;
+      animation: fall linear infinite;
     }
 
     @keyframes fall {
@@ -238,17 +237,27 @@
       }
     }
 
-    function maybeAddRain() {
-      if (Math.random() < 0.5) {
-        for (let i = 0; i < 80; i++) {
-          const drop = document.createElement('div');
-          drop.className = 'raindrop';
-          drop.style.left = `${Math.random() * 100}vw`;
-          drop.style.top = `-${Math.random() * 20}px`;
+    function maybeAddWeather() {
+      const mode = ['SNOW', 'RAIN', 'CLEAR'][Math.floor(Math.random() * 3)];
+
+      if (mode === 'CLEAR') return;
+
+      for (let i = 0; i < 80; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'raindrop';
+        drop.style.left = `${Math.random() * 100}vw`;
+        drop.style.top = `-${Math.random() * 20}px`;
+
+        if (mode === 'SNOW') {
+          drop.style.backgroundColor = 'rgba(50, 50, 50, 0.5)';
           drop.style.animationDuration = `${Math.random() * 3 + 2}s`;
-          drop.style.animationDelay = `${Math.random() * 5}s`;
-          document.body.appendChild(drop);
+        } else if (mode === 'RAIN') {
+          drop.style.backgroundColor = 'rgba(25, 25, 25, 0.5)';
+          drop.style.animationDuration = `${(Math.random() * 3 + 2) / 2}s`;
         }
+
+        drop.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(drop);
       }
     }
 
@@ -263,9 +272,8 @@
       document.getElementById('Stem').classList.add('swaying');
       document.getElementById('Animal').classList.add('swaying');
 
-      maybeAddRain();
+      maybeAddWeather();
     };
   </script>
 </body>
 </html>
-
