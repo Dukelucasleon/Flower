@@ -18,6 +18,7 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      position: relative;
     }
 
     #canvas {
@@ -78,7 +79,6 @@
       font-size: 28px;
       font-family: 'Georgia', 'Times New Roman', serif;
       font-style: italic;
-      color: #4b2e83;
       max-width: 500px;
       text-align: left;
       line-height: 1.4;
@@ -104,6 +104,20 @@
 
     .animated {
       animation-fill-mode: both;
+    }
+
+    .raindrop {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: rgba(50, 50, 50, 0.5);
+      border-radius: 50%;
+      animation: fall linear;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 0.5; }
+      100% { transform: translateY(100vh); opacity: 0.5; }
     }
   </style>
 </head>
@@ -149,6 +163,16 @@
       return `hsl(${hue}, 70%, 90%)`;
     }
 
+    function getContrastingTextColor(bgColor) {
+      const match = bgColor.match(/hsl\((\d+),\s*70%,\s*90%\)/);
+      if (match) {
+        const hue = parseInt(match[1]);
+        const contrastHue = (hue + 180) % 360;
+        return `hsl(${contrastHue}, 70%, 30%)`;
+      }
+      return '#333';
+    }
+
     function animatePart(part) {
       const img = document.getElementById(part);
       const index = getRandomIndex(counts[part]);
@@ -169,11 +193,20 @@
     function animateQuote() {
       const quoteEl = document.getElementById('quote');
       quoteEl.style.animation = 'none';
-      quoteEl.offsetHeight; // Force reflow
+      quoteEl.offsetHeight;
       quoteEl.style.animation = `fadeIn 1.2s ease-out forwards`;
     }
 
-    function fetchQuote() {
+    function getCurrentDate() {
+      const now = new Date();
+      return now.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    function fetchQuote(bgColor) {
       fetch('https://raw.githubusercontent.com/Dukelucasleon/Flower/main/Words/Words.txt')
         .then(response => {
           if (!response.ok) {
@@ -185,13 +218,15 @@
           const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
           const quote = lines[Math.floor(Math.random() * lines.length)];
           const quoteEl = document.getElementById('quote');
-          quoteEl.textContent = `"${quote}"\n\nFor my love,\nSarah Maria Flores-Castillo`;
+          quoteEl.textContent = `"${quote}"\n\nFor my love,\nSarah Maria Flores-Castillo\n${getCurrentDate()}`;
+          quoteEl.style.color = getContrastingTextColor(bgColor);
           animateQuote();
         })
         .catch(error => {
           console.error('Error fetching quote:', error);
           const quoteEl = document.getElementById('quote');
-          quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love,\nSarah Maria Flores-Castillo`;
+          quoteEl.textContent = `"Inspiration is loading..."\n\nFor my love,\nSarah Maria Flores-Castillo\n${getCurrentDate()}`;
+          quoteEl.style.color = getContrastingTextColor(bgColor);
           animateQuote();
         });
     }
@@ -203,15 +238,32 @@
       }
     }
 
+    function maybeAddRain() {
+      if (Math.random() < 0.5) {
+        for (let i = 0; i < 80; i++) {
+          const drop = document.createElement('div');
+          drop.className = 'raindrop';
+          drop.style.left = `${Math.random() * 100}vw`;
+          drop.style.top = `-${Math.random() * 20}px`;
+          drop.style.animationDuration = `${Math.random() * 3 + 2}s`;
+          drop.style.animationDelay = `${Math.random() * 5}s`;
+          document.body.appendChild(drop);
+        }
+      }
+    }
+
     window.onload = () => {
       generateFlower();
-      document.body.style.backgroundColor = getRandomPastelColor();
-      fetchQuote();
-      document.getElementById('quote').addEventListener('click', fetchQuote);
+      const bgColor = getRandomPastelColor();
+      document.body.style.backgroundColor = bgColor;
+      fetchQuote(bgColor);
+      document.getElementById('quote').addEventListener('click', () => fetchQuote(bgColor));
 
       document.getElementById('Flower').classList.add('swaying');
       document.getElementById('Stem').classList.add('swaying');
       document.getElementById('Animal').classList.add('swaying');
+
+      maybeAddRain();
     };
   </script>
 </body>
