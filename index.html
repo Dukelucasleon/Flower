@@ -70,6 +70,15 @@
       height: 350px;
     }
 
+    #Leaf {
+      top: 0px;
+      left: 910px;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      pointer-events: none;
+    }
+
     #quote {
       position: absolute;
       top: 50%;
@@ -117,6 +126,21 @@
       0% { transform: translateY(0); opacity: 0.5; }
       100% { transform: translateY(100vh); opacity: 0.5; }
     }
+
+    @keyframes leafFall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(120vh) rotate(360deg);
+        opacity: 0.8;
+      }
+    }
+
+    .falling-leaf {
+      animation: leafFall 8s ease-in-out forwards;
+    }
   </style>
 </head>
 <body>
@@ -127,6 +151,7 @@
       <img id="Stem" />
       <img id="Flower" />
       <img id="Animal" />
+      <img id="Leaf" />
       <div id="quote"></div>
     </div>
   </div>
@@ -137,7 +162,8 @@
       Ground: 'Ground1',
       Animal: 'Animal1',
       Stem: 'Stem1',
-      Flower: 'Flower1'
+      Flower: 'Flower1',
+      Leaf: 'Leaf1'
     };
 
     const counts = {
@@ -145,7 +171,8 @@
       Ground: 2,
       Animal: 5,
       Stem: 3,
-      Flower: 4
+      Flower: 4,
+      Leaf: 3
     };
 
     function getRandomIndex(max) {
@@ -231,8 +258,18 @@
 
     function generateFlower() {
       for (const part in folders) {
-        animatePart(part);
+        if (part !== 'Leaf') {
+          animatePart(part);
+        }
       }
+    }
+
+    function animateLeaf() {
+      const leaf = document.getElementById('Leaf');
+      const index = getRandomIndex(counts.Leaf);
+      leaf.src = `${folders.Leaf}/${index}.png`;
+      leaf.style.filter = getRandomHueRotation();
+      leaf.classList.add('falling-leaf');
     }
 
     function maybeAddWeather() {
@@ -251,27 +288,8 @@
           drop.style.animationDuration = `${Math.random() * 3 + 2}s`;
         } else if (mode === 'RAIN') {
           drop.style.backgroundColor = 'rgba(25, 25, 25, 0.5)';
-          drop.style.animationDuration = `${((Math.random() * 3 + 2) / 2) / 1.5}s`; // RAIN
+          drop.style.animationDuration = `${((Math.random() * 3 + 2) / 2) / 1.5}s`;
         }
 
         drop.style.animationDelay = `${Math.random() * 5}s`;
-        document.body.appendChild(drop);
-      }
-    }
-
-    window.onload = () => {
-      generateFlower();
-      const bgColor = getRandomPastelColor();
-      document.body.style.backgroundColor = bgColor;
-      fetchQuote(bgColor);
-
-      document.getElementById('Flower').classList.add('swaying');
-      document.getElementById('Stem').classList.add('swaying');
-      document.getElementById('Animal').classList.add('swaying');
-
-      maybeAddWeather();
-    };
-  </script>
-</body>
-</html>
-
+        document.body.appendChild
