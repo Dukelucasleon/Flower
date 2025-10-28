@@ -32,8 +32,7 @@
     #canvas img {
       position: absolute;
       object-fit: contain;
-      pointer-events: auto;
-      cursor: pointer;
+      pointer-events: none;
     }
 
     #Flower {
@@ -83,8 +82,8 @@
       text-align: left;
       line-height: 1.4;
       opacity: 0;
-      cursor: pointer;
       white-space: pre-line;
+      pointer-events: none;
     }
 
     @keyframes fadeIn {
@@ -108,8 +107,8 @@
 
     .raindrop {
       position: absolute;
-      width: 4px;
-      height: 4px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       animation: fall linear infinite;
     }
@@ -233,7 +232,6 @@
     function generateFlower() {
       for (const part in folders) {
         animatePart(part);
-        document.getElementById(part).addEventListener('click', () => animatePart(part));
       }
     }
 
@@ -266,7 +264,6 @@
       const bgColor = getRandomPastelColor();
       document.body.style.backgroundColor = bgColor;
       fetchQuote(bgColor);
-      document.getElementById('quote').addEventListener('click', () => fetchQuote(bgColor));
 
       document.getElementById('Flower').classList.add('swaying');
       document.getElementById('Stem').classList.add('swaying');
